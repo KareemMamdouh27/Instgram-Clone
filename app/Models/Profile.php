@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Profile extends Model
 {
     use HasFactory;
-    public $fillable = ['description', 'title', 'user_id', 'url'];
+    public $fillable = ['description', 'title', 'user_id', 'url', 'image'];
 
 
 

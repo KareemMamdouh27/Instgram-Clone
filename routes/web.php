@@ -25,6 +25,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/profile/{user}', [ProfileController::class, 'index'])->name('profile.show');
 Route::get('/p/create', [PostsController::class, 'create']);
+Route::get('/p/{post}', [PostsController::class, 'show'])->name('post.show');
 Route::post('/p',[PostsController::class, 'store']);
+Route::get('/profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::get('/profile/{user}', [ProfileController::class, 'index'])->name('profile.show');
+Route::patch('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile/{post}', [PostsController::class, 'destroy'])->name('post.delete');
