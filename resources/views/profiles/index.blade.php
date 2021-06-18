@@ -6,9 +6,13 @@
         <div class="col-3">
             <img src="/storage/{{ $user->profile->image }}" class="rounded-circle w-100" alt="" srcset="">
         </div>
+        
         <div class="col-9 pt-5">
             <div class="d-flex justify-content-between align-items-baseline">
-                <h1>{{ $user->username }}</h1>
+                <div class="d-flex align-items-center pb-3">
+                    <div class="h4">{{ $user->username }}</div>
+                    <follow-button user-id="{{ $user->id }}" follows="{{ $follows }}"></follow-button>
+                </div>
                 @can('update', $user->profile)
                     <a href="/p/create">Add New Post</a>
                 @endcan
@@ -19,13 +23,14 @@
             @endcan
 
             <div class="d-flex">
-                <div class="pr-5"><strong>{{ $user->posts->count() }}</strong> Posts</div>
-                <div class="pr-5"><strong>23k</strong> Followers</div>
-                <div class="pr-5"><strong>212</strong> Following</div>
+                <div class="pr-5"><strong>{{ $postsCount }}</strong> Posts</div>
+                <div class="pr-5"><strong>{{ $followersCount }}</strong> Followers</div>
+                <div class="pr-5"><strong>{{ $followingCount }}</strong> Following</div>
             </div>
             <div class="pt-3"><strong>{{ $user->profile->title }}</strong></div>
             <p> {{ $user->profile->description }} </p>
             <div><a href={{ $user->profile->url }}>Facebook.com/kareem.kimooz27</a></div>
+
         </div>
     </div>
 
@@ -38,6 +43,8 @@
             </div>
         @endforeach
     </div>
+
+    <hr>
 
 </div>
 @endsection

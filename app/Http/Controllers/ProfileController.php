@@ -11,7 +11,11 @@ class ProfileController extends Controller
 {
     public function index(User $user)
     {
-        return view('profiles.index', compact('user'));
+        $follows = (auth()->user()) ? auth()->user()->following->contains($user->id) : false;
+        $postsCount = $user->posts->count();
+        $followersCount = $user->profile->followers->count();
+        $followingCount = $user->following->count();
+        return view('profiles.index', compact('user','follows' , 'postsCount', 'followersCount', 'followingCount'));
     }
 
     public function edit(User $user)
@@ -35,11 +39,13 @@ class ProfileController extends Controller
 
             $image = Image::make(\public_path("storage/{$imagePath}"))->fit(1000,1000);
             $image->save();
+
+            $imageArray = ['image' => $imagePath];
         }
 
         $user->profile->update(array_merge(
             $data,
-            ['image' => $imagePath]
+            $imagePath ?? []
         ));
 
         return redirect('/profile/'. auth()->user()->id);   

@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\followsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
+use App\Mail\NewUserWelcomeMail;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +19,14 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/email', function() {
+    return new NewUserWelcomeMail();
 });
-
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::post('/follow/{user}', [followsController::class, 'store']);
+Route::get('/', [PostsController::class, 'index'])->name('HOME');
 Route::get('/p/create', [PostsController::class, 'create']);
 Route::get('/p/{post}', [PostsController::class, 'show'])->name('post.show');
 Route::post('/p',[PostsController::class, 'store']);

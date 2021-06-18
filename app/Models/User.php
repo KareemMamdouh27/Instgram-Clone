@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Profile;
+use App\Mail\NewUserWelcomeMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,6 +53,8 @@ class User extends Authenticatable
             $user->profile()->create([
                 'title' => $user->username,
             ]);
+
+            // Mail::to($user->email)->send(new NewUserWelcomeMail());
         });
     }
 
@@ -63,5 +68,12 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class)->OrderBy('created_at', 'DESC');
+    }
+
+
+    ### Many To Many RelationShip With Profiles WHo can Follow ###
+    public function following()
+    {
+        return $this->belongsToMany(Profile::class);
     }
 }
