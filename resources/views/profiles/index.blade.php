@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row" style="height: 230px">
         <div class="col-3">
-            <img src="/storage/{{ $user->profile->image }}" class="rounded-circle w-100" alt="" srcset="">
+            <a href="/storage/{{ $user->profile->image }}" alt="" srcset=""><img src="/storage/{{ $user->profile->image }}" class="rounded-circle w-100"></a>
         </div>
         
         <div class="col-9 pt-5">
@@ -30,7 +30,7 @@
             <div class="pt-3"><strong>{{ $user->profile->title }}</strong></div>
             <p> {{ $user->profile->description }} </p>
             <div><a href={{ $user->profile->url }}>Facebook.com/kareem.kimooz27</a></div>
-
+            <hr>
         </div>
     </div>
 
@@ -44,7 +44,7 @@
         @endforeach
     </div>
 
-    <hr>
 
 </div>
+
 @endsection

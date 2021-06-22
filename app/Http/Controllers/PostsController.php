@@ -47,7 +47,6 @@ class PostsController extends Controller
 
         return redirect('/profile/'. auth()->user()->id);   
 
-        dd(request()->all());   
     }
 
     public function show(\App\Models\Post $post)
@@ -55,8 +54,45 @@ class PostsController extends Controller
         return view('posts.show', compact('post'));
     }
 
-    public function destroy($post)
+    public function edit($id)
     {
-        //
+        return view('posts.edit')
+            ->with('post', Post::where('id', $id)->first());
+    }
+
+    public function update(Post $post)
+    {
+        $data = request()->validate([
+            'caption' => 'required',
+            'image'   => 'required|image'
+        ]);
+
+        $post->update($data);
+        
+        if( request('image')){
+            $imagePath = request('image')->store('profile', 'public');
+
+            $image = Image::make(\public_path("storage/{$imagePath}"))->fit(1000,1000);
+            $image->save();
+
+            $imageArray = ['image' => $imagePath];
+        }
+
+        $post->update(array_merge(
+            $data,
+            $imageArray ?? []
+        ));
+
+        return redirect('/profile/'. auth()->user()->id);
+
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect('/')
+            ->with('message','Your post has been deleted');
     }
 }

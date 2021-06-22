@@ -45,7 +45,7 @@ class ProfileController extends Controller
 
         $user->profile->update(array_merge(
             $data,
-            $imagePath ?? []
+            $imageArray ?? []
         ));
 
         return redirect('/profile/'. auth()->user()->id);   

@@ -2,6 +2,21 @@
 
 @section('content')
 <div class="container">
+
+    <form action="/p" enctype="multipart/form-data" method="POST">
+        @csrf
+        <div class="container border-dark align-items-center text-center">
+            <span> </span>
+            <input type="text" name="text" placeholder="Whats on your mind ?" class="form-control">
+            <div class="mt-3">
+                <input type="file" name="file" class="form-control-file" >
+                <input type="submit" value="Post" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+
+    <hr class="mb-5 mt-5">
+
     @foreach ($posts as $post)
         <div class="row">
             <div class="col-6 offset-3">
@@ -30,8 +45,8 @@
                 <div>
                     <a class="font-weight-bold text-dark" href="/profile/{{ $post->user->id }}">{{ $post->user->username }}: </a>{{ $post->caption }}
                 </div>
-
             </div>
+            
         </div>
     @endforeach
 

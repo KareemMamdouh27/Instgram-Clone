@@ -25,6 +25,7 @@ Route::get('/email', function() {
 
 Auth::routes();
 
+Route::put('/p/{post}',[PostsController::class, 'update'])->name('post.update');
 Route::post('/follow/{user}', [followsController::class, 'store']);
 Route::get('/', [PostsController::class, 'index'])->name('HOME');
 Route::get('/p/create', [PostsController::class, 'create']);
@@ -33,4 +34,6 @@ Route::post('/p',[PostsController::class, 'store']);
 Route::get('/profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::get('/profile/{user}', [ProfileController::class, 'index'])->name('profile.show');
 Route::patch('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
-Route::delete('/profile/{post}', [PostsController::class, 'destroy'])->name('post.delete');
+Route::delete('/p/{post}', [PostsController::class, 'destroy'])->name('post.delete');
+Route::get('/p/{post}/edit', [PostsController::class, 'edit'])->name('posts.edit');
+

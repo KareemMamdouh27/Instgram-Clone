@@ -29,6 +29,20 @@
                 <a class="font-weight-bold text-dark" href="/profile/{{ $post->user->id }}">{{ $post->user->username }}: </a>{{ $post->caption }}
             </div>
 
+            @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
+                <span class="float-right ml-2">
+                    <form action="/p/{{$post->id}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <a href="/p"><button class="btn btn-danger form-control pr-3 ">Delete</button></a>
+                    </form>
+                </span>
+                <span class="float-right">
+                    <a href="/p/{{$post->id}}/edit" class="btn btn-outline-primary">
+                        Edit
+                    </a>
+                </span>
+            @endif
         </div>
     </div>
 </div>
